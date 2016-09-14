@@ -1,11 +1,15 @@
 from FGAme import *
 
+# Contador de pulos
+jump_count = 0.0
+
 # Mundo
 world = World()
 
 # Personagem
-char1 = Circle(20, pos=(35, 35), color='random', mass=80)
+char1 = AABB(shape=(15, 25), pos=(35, 35), color='random', mass=80)
 char1.inertia /= 2
+char1.restitution = 0
 
 # Terreno
 terrain = AABB(shape=(800, 20), pos=(400, 10), mass='inf')
@@ -14,13 +18,13 @@ terrain = AABB(shape=(800, 20), pos=(400, 10), mass='inf')
 heigh_bar = AABB(shape=(50, 2), pos=(400, 150), mass='inf')
 
 # Forca de atracao (gravidade)
-char1.gravity = 1000
+char1.gravity = 2400
 
-# Adicionando elementos
+# Adicionando elementos ao mundo
 world.add(char1)
 world.add(heigh_bar)
 world.add(terrain)
-world.add.margin(0, 0, 0, 0)
+world.add.margin(0)
 
 
 # Mecanica de movimentacao pra direita
@@ -47,9 +51,20 @@ def move_left():
 @listen('key-down', 'space')
 def jump():
     # Já deixando preparado pra uma mecanica de pulo duplo pro jogo
-    # if jump_count < 2:\
-    char1.vel = (char1.vel.x, 275)
+    #if jump_count < 2:
+    char1.vel = (char1.vel.x, 400)
+    #    jump_count += 1
 
+
+@listen('frame-enter')
+def update():
+    if char1.vel.y < 50:
+        jump_count = 0
+
+
+#@listen('pre-collision')
+def on_collision(col):
+    print(col)
 
 world.run()
 
