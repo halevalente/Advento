@@ -1,7 +1,7 @@
 from FGAme import *
 
 # Contador de pulos
-jump_count = 0.0
+jump_count = 0
 
 # Mundo
 world = World()
@@ -50,30 +50,22 @@ def move_left():
 # Mecanica do pulo
 @listen('key-down', 'space')
 def jump():
-    # Já deixando preparado pra uma mecanica de pulo duplo pro jogo
-    #if jump_count < 2:
-    char1.vel = (char1.vel.x, 400)
-    #    jump_count += 1
+    # Mecanica de pulo duplo pro jogo
+    if jump_count < 2:
+        char1.vel = (char1.vel.x, 400)
+        global jump_count
+        jump_count += 1
 
 
 @listen('frame-enter')
 def update():
-    if char1.vel.y < 50:
+    if char1.pos.y < 35:
+        global jump_count
         jump_count = 0
 
 
-#@listen('pre-collision')
-def on_collision(col):
-    print(col)
+# @listen('pre-collision')
+# def on_collision(col):
+#     print(col)
 
 world.run()
-
-# Junk Code
-#
-# k = char1.mass
-# char1.force = lambda t: (0, -10000)
-# char1.force = lambda t: -k * vec_gravity.pos
-# damping = 0.1
-#
-# if char1.pos.y > 100:
-#       char1.vel = (char1.vel.x, -75)
