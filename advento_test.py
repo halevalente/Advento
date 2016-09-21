@@ -1,6 +1,7 @@
 from FGAme import *
 
-# Contador de pulos
+# Contadores globais
+special_count = 0
 jump_count = 0
 
 # Mundo
@@ -13,7 +14,7 @@ char1.restitution = 0
 
 # Inimigo
 enemy1 = RegularPoly(
-    3, length=60, pos=(750, 35), color='random', mass='inf')
+    3, length=75, pos=(750, 35), color='random', mass='inf')
 enemy1.inertia /= 2
 enemy1.restitution = 0
 enemy1.omega += 15
@@ -83,13 +84,31 @@ def shot_right():
 # Comando de especial
 @listen('key-down', 'space')
 def special_move():
-    count = 0
-    while count < 10:
-        shot = Circle(
-            5, pos=(char1.pos.x, char1.pos.y), mass='inf')
-        shot.vel = vel.random()  # <------------------- Ainda esta quebrado
+    if special_count < 2:
+        blast_count = 0
+        while blast_count < 10:
+            shot = Circle(5, pos=(char1.pos.x, char1.pos.y), mass='inf')
+            shot.vel = vel.random()
+            world.add(shot)
+            blast_count += 1
+
+    elif special_count == 2:
+        if enemy1.pos.x < char1.pos.x:
+            shot = Circle(50, pos=(char1.pos.x - 35, char1.pos.y), mass='inf')
+            shot.vel = ((enemy1.pos.x - char1.pos.x), (enemy1.pos.y - char1.pos.y))  # |
+        elif enemy1.pos.x > char1.pos.x:
+            shot = Circle(50, pos=(char1.pos.x + 35, char1.pos.y), mass='inf')
+            shot.vel = ((enemy1.pos.x - char1.pos.x), (enemy1.pos.y - char1.pos.y))  # |
+        else:
+            shot = Circle(50, pos=(char1.pos.x, char1.pos.y+35), mass='inf')
+            shot.vel = ((enemy1.pos.x - char1.pos.x), (enemy1.pos.y - char1.pos.y))  # |______ Ainda estão quebrados
         world.add(shot)
-        count += 1
+
+    else:
+        return
+
+    global special_count
+    special_count += 1
 
 
 # Reset de pulos
