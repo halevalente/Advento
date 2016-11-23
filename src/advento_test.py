@@ -1,4 +1,8 @@
+# importando o FGame
 from FGAme import *
+# pygame
+import pygame
+from pygame.locals import *
 
 # Contadores e marcadores globais
 special_count = 0
