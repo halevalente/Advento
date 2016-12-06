@@ -1,1 +1,1 @@
-cd /usr/local/lib/python3.5/site-packages
+cd /usr/local/lib/python3.5/site-packages/FGAme
