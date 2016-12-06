@@ -4,8 +4,9 @@ import pygame
 from pygame.locals import *
 
 # Contadores e marcadores globais
-special_count = 0
-turbo_count = 0
+shot_charges = 10
+special_charges = 1
+turbo_charges = 3
 
 # Mundo
 world = World()
@@ -25,9 +26,6 @@ char1.restitution = 0
 enemy1 = RegularPoly(
     6, length=35, pos=(400, 530), color='red', mass='inf', vel=(300,0), restitution=0)
 enemy1.inertia = 'inf'
-
-# Terreno
-terrain = AABB(shape=(800, 20), pos=(400, 10), mass='inf', color='green')
 
 # Plataformas
 platform1 = world.add.aabb(shape=(115, 10), pos=(67, 452), mass='inf')
@@ -61,65 +59,41 @@ def move_left():
 # Comando de turbo
 @listen('key-down', 'w')
 def turbo():
-    if turbo_count < 10:
+    if turbo_charges > 0:
         char1.vel = char1.vel*3
-        global turbo_count
-        turbo_count += 1
+        global turbo_charges
+        turbo_charges -= 1
 
 
 # Comando de tiro do jogador
 @listen('key-down', 'q')
 def player_shot():
-    shot = world.add.aabb(
-        shape=(2, 3),
-        pos=(char1.pos.x, char1.pos.y+20),
-        vel=(0, 1000),
-        mass='inf')
-
+    if shot_charges > 0:
+        shot = world.add.aabb(
+            shape=(2, 3),
+            pos=(char1.pos.x, char1.pos.y+20),
+            vel=(0, 1000),
+            mass='inf')
+        global shot_charges
+        shot_charges -= 1
 
 
 # Comando de especial
-@listen('key-down', 'space')
+@listen('key-down', 'r')
 def special_move():
-    if special_count < 2:
-        blast_count = 0
-        char1.inertia = 'inf'
-        while blast_count < 10:
-            shot = Circle(5, pos=(char1.pos.x, char1.pos.y+25), mass='inf')
-            shot.vel = vel.random()
-            world.add(shot)
-            blast_count += 1
-        char1.inertia /= 2
-
-    elif special_count == 2:
-        if enemy1.pos.x < char1.pos.x:
-            shot = Circle(50,
-                        pos=(char1.pos.x - 35, char1.pos.y),
-                        mass='inf')
-            shot.vel = ((enemy1.pos.x - char1.pos.x),
-                        (enemy1.pos.y - char1.pos.y)) # Ainda meio quebrado
-
-        elif enemy1.pos.x > char1.pos.x:
-            shot = Circle(50,
-                        pos=(char1.pos.x + 35,
-                        char1.pos.y),
-                        mass='inf')
-            shot.vel = ((enemy1.pos.x - char1.pos.x),
-                        (enemy1.pos.y - char1.pos.y)) # Ainda meio quebrado
-
-        else:
-            shot = Circle(50,
-                        pos=(char1.pos.x, char1.pos.y+35),
-                        mass='inf')
-            shot.vel = ((enemy1.pos.x - char1.pos.x),
-                        (enemy1.pos.y - char1.pos.y)) # Ainda meio quebrado
+    if special_charges > 0:
+        shot = RegularPoly(6,
+            length=30,
+            pos=(char1.pos.x, char1.pos.y + 40),
+            vel=(0,550),
+            omega=20,
+            color='blue',
+            mass='inf')
         world.add(shot)
-
+        global special_charges
+        special_charges -= 1
     else:
-        return
-
-    global special_count
-    special_count += 1
+        pass
 
 
 # Movimentacao do inimigo
@@ -130,14 +104,63 @@ def enemy_movement():
     elif enemy1.x <= 50:
         enemy1.vel = (enemy1.vel.x*(-1), enemy1.vel.y)
 
+
 # Tiro do inimigo
+ENEMYSHOT = USEREVENT + 1
+pygame.time.set_timer(ENEMYSHOT, 500)
+
+@listen('frame-enter')
+def shot_listener():
+    if pygame.event.get(ENEMYSHOT): 
+        enemy_shot()
+
 def enemy_shot():
     shot = Circle(3,
-        pos=(enemy1.pos.x, enemy1.pos.y-20),
-        vel=(0, -1000),
-        mass='inf')
+        pos=(enemy1.pos.x, enemy1.pos.y-40),
+        vel=(0, -500),
+        mass='inf',
+        color='red')
     world.add(shot)
-    schedule(1,enemy_shot)
+
+
+# Recarregar habilidades
+PLAYERCHARGES = USEREVENT + 2
+pygame.time.set_timer(PLAYERCHARGES, 3500)
+
+@listen('frame-enter')
+def charges_listener():
+    if pygame.event.get(PLAYERCHARGES): 
+        refill_charges()
+
+def refill_charges():
+    if special_charges == 0 and shot_charges == 0:
+        global special_charges
+        special_charges = 1
+    if shot_charges == 0:
+        global shot_charges
+        shot_charges = 10
+    if turbo_charges < 3:
+        global turbo_charges
+        turbo_charges += 1
+    else:
+        pass
+        
+
+
+# Eliminar tiros fora de cena
+@listen('frame-enter')
+def remove_outbound_shot():
+    try:
+        if shot.pos.x<0 or shot.pos.x>600:
+            world.remove(shot)
+        elif shot.pos.y<0 or shot.pos.y>800:
+            world.remove(shot)
+        else:
+            pass
+    except NameError:
+        pass
+    else:
+        pass
 
 
 # Condicao de fim de jogo
@@ -146,10 +169,11 @@ def check_player_lose():
     if char1.x < -10 or char1.x > 810 or char1.y < -10 or char1.y > 610:
         world.pause()
 
+
 # Adiciona elementos ao mundo
 world.add(char1)
 world.add(enemy1)
-world.add(terrain)
 world.add.margin(10,0,10,0)
 
 run()
+enemy_shot()
