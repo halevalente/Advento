@@ -7,6 +7,7 @@ from pygame.locals import *
 shot_charges = 10
 special_charges = 1
 turbo_charges = 3
+shield_charges = 1
 
 # Mundo
 world = World()
@@ -18,7 +19,7 @@ world.damping=2
 # pygame.mixer.music.set_volume(0.2);
 
 # Personagem
-char1 = AABB(shape=(15, 25), pos=(400, 35), color='blue', mass='150')
+char1 = AABB(shape=(15, 25), pos=(400, 35), color='blue', mass=150)
 char1.inertia /= 2
 char1.restitution = 0
 
@@ -55,7 +56,6 @@ def move_left():
 def move_left():
     char1.vel = (char1.vel.x, char1.vel.y-25)
 
-
 # Comando de turbo
 @listen('key-down', 'w')
 def turbo():
@@ -63,6 +63,8 @@ def turbo():
         char1.vel = char1.vel*3
         global turbo_charges
         turbo_charges -= 1
+    else:
+        pass
 
 
 # Comando de tiro do jogador
@@ -73,16 +75,37 @@ def player_shot():
             shape=(2, 3),
             pos=(char1.pos.x, char1.pos.y+20),
             vel=(0, 1000),
-            mass='inf')
+            mass='inf',
+            color='blue')
         global shot_charges
         shot_charges -= 1
+    else:
+        pass
+
+
+# Comando de escudo do jogador
+@listen('key-down','e')
+def player_shield():
+    if shield_charges > 0:
+        char1.vel/=10
+        char1.mass *= 10
+        char1.color='darkblue'
+        global shield_charges
+        shield_charges -= 1
+        schedule(1,shield_cooldown)
+    else:
+        pass
+
+def shield_cooldown():
+    char1.mass /= 10
+    char1.color='blue'
 
 
 # Comando de especial
 @listen('key-down', 'r')
 def special_move():
     if special_charges > 0:
-        shot = RegularPoly(6,
+        shot = RegularPoly(10,
             length=30,
             pos=(char1.pos.x, char1.pos.y + 40),
             vel=(0,550),
@@ -142,6 +165,9 @@ def refill_charges():
     if turbo_charges < 3:
         global turbo_charges
         turbo_charges += 1
+    if shield_charges == 0:
+        global shield_charges
+        shield_charges = 1
     else:
         pass
         
