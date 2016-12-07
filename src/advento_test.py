@@ -12,11 +12,6 @@ shield_charges = 1
 # Mundo
 world = World()
 world.damping=2
-# pygame.mixer.pre_init(44100, 16, 2, 4096)
-# pygame.init()
-# main_sound = pygame.mixer.music.load("main_theme.mp3")
-# main_sound = pygame.mixer.music.play()
-# pygame.mixer.music.set_volume(0.2);
 
 # Personagem
 char1 = AABB(shape=(15, 25), pos=(400, 35), color='blue', mass=150)
@@ -24,8 +19,7 @@ char1.inertia /= 2
 char1.restitution = 0
 
 # Inimigo
-enemy1 = RegularPoly(
-    6, length=35, pos=(400, 530), color='red', mass='inf', vel=(300,0), restitution=0)
+enemy1 = AABB(shape=(35, 35), pos=(400, 530), color='red', mass='inf', vel=(300,0), restitution=0)
 enemy1.inertia = 'inf'
 
 # Plataformas
@@ -202,4 +196,3 @@ world.add(enemy1)
 world.add.margin(10,0,10,0)
 
 run()
-enemy_shot()
