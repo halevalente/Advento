@@ -10,7 +10,6 @@ _ROOT = os.path.abspath(os.path.dirname(__file__))
 
 class Battlefield(World):
     def init(self):
-
         self.player = Player(shape=(15, 25),
                             pos=(400, 35),
                             color='blue',

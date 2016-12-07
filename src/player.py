@@ -1,5 +1,5 @@
 from FGAme import *
-from advento.sfx import SFX
+from sfx import SFX
 import os
 import pygame
 from pygame.locals import *

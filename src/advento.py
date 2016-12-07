@@ -1,4 +1,5 @@
 from FGAme import *
-from battlefield import Battlefield
+from battlefield import *
 
-battlefield = Battlefield()
+if __name__ == '__main__':
+    battlefield = Battlefield()

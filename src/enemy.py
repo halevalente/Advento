@@ -1,5 +1,5 @@
 from FGAme import *
-from advento.sfx import SFX
+from sfx import SFX
 from pygame.locals import *
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
