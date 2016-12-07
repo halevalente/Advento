@@ -13,8 +13,8 @@ class Player(AABB):
         self.special_charges = special_charges
         self.turbo_charges = turbo_charges
         self.shield_charges = shield_charges
-        create_charges_event(self)
-        super(Character, self).__init__(inertia = inertia * 0.5, restitution=0, *args, **kwargs)
+        super(Player, self).__init__(*args, **kwargs)
+        self.create_charges(self)
         # on('pre-collision').do(sound_hit)
 
     def move_player(self, dx, dy):
@@ -70,7 +70,7 @@ class Player(AABB):
         else:
             pass
 
-    def create_charges_event(self):
+    def create_charges(self, *args, **kwargs):
         PLAYERCHARGES = USEREVENT + 2
         pygame.time.set_timer(PLAYERCHARGES, 3500)
 

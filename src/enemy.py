@@ -1,5 +1,6 @@
 from FGAme import *
 from sfx import SFX
+import pygame
 from pygame.locals import *
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -8,8 +9,8 @@ _ROOT = os.path.abspath(os.path.dirname(__file__))
 class Enemy(AABB):
     def __init__(self, armor_health, *args, **kwargs):
         self.armor_health = armor_health
-        create_enemy_shots_event(self)
-        super(Character, self).__init__(inertia = 'inf', restitution=0, *args, **kwargs)
+        super(Enemy, self).__init__(*args, **kwargs)
+        self.create_enemy_shots(self)
         # on('pre-collision').do(sound_hit)
 
     def enemy_movement(self, vel):
@@ -20,7 +21,7 @@ class Enemy(AABB):
         else:
             pass
 
-    def create_enemy_shots_event(self):
+    def create_enemy_shots(self, *args, **kwargs):
         ENEMYSHOT = USEREVENT + 1
         pygame.time.set_timer(ENEMYSHOT, 500)
 

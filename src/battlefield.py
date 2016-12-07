@@ -34,12 +34,12 @@ class Battlefield(World):
         self.draw_platforms()
         self.draw_margin()
 
-        on('long-press', 'left').do(self.player.move_character, -25, 0)
-        on('long-press', 'right').do(self.player.move_character, 25, 0)
-        on('long-press', 'up').do(self.player.move_character, 0, 25)
-        on('long-press', 'down').do(self.player.move_character, 0, -25)
+        on('long-press', 'left').do(self.player.move_player, -25, 0)
+        on('long-press', 'right').do(self.player.move_player, 25, 0)
+        on('long-press', 'up').do(self.player.move_player, 0, 25)
+        on('long-press', 'down').do(self.player.move_player, 0, -25)
         on('key-down', 'q').do(self.player.shot, self, self.player.special_charges)
-        on('key-down', 'w').do(self.player.turbo, sel.player.turbo_charges)
+        on('key-down', 'w').do(self.player.turbo, self.player.turbo_charges)
         on('key-down', 'e').do(self.player.shield, self.player.mass, self.player.color, self.player.shield_charges)
         on('key-down', 'r').do(self.player.special_move, self, self.player.special_charges)
         on('frame-enter').do(self.player.charges_listener,
@@ -49,7 +49,7 @@ class Battlefield(World):
                             self.player.special_charges)
         on('frame-enter').do(self.enemy.enemy_shot_listener, self)
         on('frame-enter').do(self.enemy.enemy_movement, self.enemy.vel)
-        on('frame-enter').do(remove_out_of_bounds_shot)
+        on('frame-enter').do(self.remove_out_of_bounds_shot)
         on('frame-enter').do(self.player.check_defeat)
         on('frame-enter').do(self.enemy.check_defeat)
 
