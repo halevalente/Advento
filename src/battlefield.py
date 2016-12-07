@@ -28,8 +28,8 @@ class Battlefield(World):
         self.add([self.player, self.enemy])
         self.damping = 2
 
-        # main_theme = os.path.join(_ROOT, 'sfx/main_theme.mp3')
-        # SFX.play_music(main_theme)
+        main_theme = os.path.join(_ROOT, 'sfx/main_theme.wav')
+        SFX.play_music(main_theme)
 
         self.draw_platforms()
         self.draw_margin()
