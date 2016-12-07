@@ -17,7 +17,7 @@ class Player(AABB):
         self.shield_charges = shield_charges
         super(Player, self).__init__(*args, **kwargs)
         self.create_charges(self)
-        on('pre-collision').do(sound_hit)
+        on('pre-collision').do(self.sound_hit)
 
     def move_player(self, dx, dy):
         self.vel += (dx, dy)
@@ -69,6 +69,8 @@ class Player(AABB):
 
     def turbo(self, turbo_charges):
         if turbo_charges > 0:
+            turbo_sound = os.path.join(_ROOT, 'sfx/turbo.wav')
+            SFX.play_sound(turbo_sound)
             self.vel *= 3
             self.turbo_charges -= 1
         else:
