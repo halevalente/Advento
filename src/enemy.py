@@ -1,5 +1,6 @@
 from FGAme import *
 from sfx import SFX
+from player import *
 import pygame
 from pygame.locals import *
 import os
@@ -17,9 +18,9 @@ class Enemy(AABB):
 
     def enemy_movement(self, vel):
         if self.x >= 750:
-            self.vel = (vel.x*(-1), vel.y)
+            self.vel = (self.vel.x*(-1), self.vel.y)
         elif self.x <= 50:
-            self.vel = (vel.x*(-1), vel.y)
+            self.vel = (self.vel.x*(-1), self.vel.y)
         else:
             pass
 
@@ -57,13 +58,18 @@ class Enemy(AABB):
         A, B = col
         if isinstance(A, Enemy) and isinstance(B, AABB):
             A.deal_damage()
-        elif isinstance(A, AABB) and isinstance(B, ENEMY):
+        elif isinstance(A, AABB) and isinstance(B, Enemy):
             B.deal_damage()
         elif isinstance(A, Enemy) and isinstance(B, RegularPoly):
             multi_damage = 0
             while(multi_damage < 3):
                 A.deal_damage()
-        elif isinstance(A, RegularPoly) and isinstance(B, Enemy):
+        elif isinstance(A, RegularPoly) and isinstane(B, Enemy):
             multi_damage = 0
             while(multi_damage < 3):
                 B.deal_damage()
+        else:
+            pass
+
+    def deal_damage(self):
+        self.armor_health -= 10

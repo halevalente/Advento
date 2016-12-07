@@ -1,5 +1,6 @@
 from FGAme import *
 from sfx import SFX
+from enemy import *
 import os
 import pygame
 from pygame.locals import *
@@ -40,7 +41,7 @@ class Player(AABB):
     def special_move(self, world, special_charges):
         if special_charges > 0:
             shot = RegularPoly(10,
-                length=30,
+                length=15,
                 pos=(self.pos.x, self.pos.y + 40),
                 vel=(0,550),
                 omega=20,
@@ -130,4 +131,4 @@ class Player(AABB):
             A.deal_damage()
             
     def deal_damage(self):
-        self.health -= 10
+        self.armor_health -= 10
