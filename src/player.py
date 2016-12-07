@@ -5,6 +5,7 @@ import pygame
 from pygame.locals import *
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
+PLAYERCHARGES = USEREVENT + 2
 
 class Player(AABB):
     def __init__(self, armor_health, shot_charges, special_charges, turbo_charges, shield_charges, *args, **kwargs):
@@ -76,7 +77,7 @@ class Player(AABB):
 
     def charges_listener(self, shot_charges, turbo_charges, shield_charges, special_charges):
         if pygame.event.get(PLAYERCHARGES): 
-            refill_charges(self, shot_charges, turbo_charges, shield_charges, special_charges)
+            self.refill_charges(shot_charges, turbo_charges, shield_charges, special_charges)
 
     def refill_charges(self, shot_charges, turbo_charges, shield_charges, special_charges):
         if special_charges == 0 and shot_charges == 0:
@@ -98,7 +99,7 @@ class Player(AABB):
         if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
             print("DERROTA. Você foi destruido.")
             exit()
-        elif self.health <= 0:
+        elif self.armor_health <= 0:
             print("DERROTA. Você foi destruido.")
             exit()
 

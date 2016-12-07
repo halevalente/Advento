@@ -3,7 +3,6 @@ from battlefield import *
 
 battlefield = Battlefield()
 
-
 # #! /usr/bin/env python
 # from menuAdvento import *
 

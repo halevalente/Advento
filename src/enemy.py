@@ -5,6 +5,8 @@ from pygame.locals import *
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
+ENEMYSHOT = USEREVENT + 1   
+
 
 class Enemy(AABB):
     def __init__(self, armor_health, *args, **kwargs):
@@ -27,8 +29,8 @@ class Enemy(AABB):
 
     def enemy_shot_listener(self, world):
         if pygame.event.get(ENEMYSHOT):
-            enemy_shot(self, world)
-
+            self.enemy_shot(world)
+            
     def enemy_shot(self, world):
         shot = Circle(3,
             pos=(self.pos.x, self.pos.y-40),
@@ -46,7 +48,7 @@ class Enemy(AABB):
         if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
             print("VITORIA! O inimigo foi destruido.")
             exit()
-        elif self.health <= 0:
+        elif self.armor_health <= 0:
             print("VITORIA! O inimigo foi destruido.")
             exit()
 
