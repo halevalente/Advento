@@ -36,11 +36,11 @@ def game_intro():
         gameDisplay.fill(white)
         largeText = pygame.font.SysFont("comicsansms",115)
         TextSurf, TextRect = text_objects("Advento", largeText, black)
-        TextRect.center = ((display_width/2),(display_height/2))
+        TextRect.center = ((display_width/2),(display_height/4))
         gameDisplay.blit(TextSurf, TextRect)
 
-        button("Começar",150,450,100,50,bright_blue,blue, game_loop)
-        button("Sair",550,450,100,50,bright_red,red,quitgame)
+        button("Começar",310,300,200,100,bright_blue,blue, game_loop)
+        button("Sair",310,450,200,100,bright_red,red,quitgame)
    
         pygame.display.update()
         clock.tick(15)
