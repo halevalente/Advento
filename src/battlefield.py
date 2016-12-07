@@ -1,7 +1,7 @@
 from FGAme import *
-from advento.player import Player
-from advento.enemy import Enemy
-from character.sfx import SFX
+from player import Player
+from enemy import Enemy
+from sfx import SFX
 import os
 import pygame
 from pygame.locals import *
@@ -20,7 +20,12 @@ class Battlefield(World):
                             special_charges = 1,
                             turbo_charges = 3,
                             shield_charges = 1)
-        self.enemy = Enemy()
+        self.enemy = Enemy(shape=(35, 35),
+                            pos=(400, 530),
+                            color='red',
+                            mass='inf',
+                            vel=(300,0),
+                            armor_health=100)
         self.add([self.player, self.enemy])
         self.damping = 2
 
@@ -43,6 +48,8 @@ class Battlefield(World):
                             self.player.turbo_charges,
                             self.player.shield_charges,
                             self.player.special_charges)
+        on('frame-enter').do(self.enemy.enemy_shot_listener, self)
+        on('frame-enter').do(self.enemy.enemy_movement, self.enemy.vel)
         on('frame-enter').do(remove_out_of_bounds_shot)
         on('frame-enter').do(self.player.check_defeat)
         on('frame-enter').do(self.enemy.check_defeat)
@@ -56,17 +63,17 @@ class Battlefield(World):
         self.platform6 = self.add.aabb(shape=(67, 10), pos=(750, 440), mass='inf')
 
     def remove_out_of_bounds_shot(self):
-    try:
-        if shot.pos.x<0 or shot.pos.x>600:
-            self.remove(shot)
-        elif shot.pos.y<0 or shot.pos.y>800:
-            self.remove(shot)
+        try:
+            if shot.pos.x<0 or shot.pos.x>600:
+                self.remove(shot)
+            elif shot.pos.y<0 or shot.pos.y>800:
+                self.remove(shot)
+            else:
+                pass
+        except NameError:
+            pass
         else:
             pass
-    except NameError:
-        pass
-    else:
-        pass
 
     def draw_margin(self):
         self.add.margin(10,0,10,0)

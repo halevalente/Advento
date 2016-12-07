@@ -1,4 +1,4 @@
-from FGAme import *	
-from advento.battlefield import *
-			
+from FGAme import *
+from battlefield import Battlefield
+
 battlefield = Battlefield()

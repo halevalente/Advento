@@ -14,7 +14,7 @@ class Player(AABB):
         self.turbo_charges = turbo_charges
         self.shield_charges = shield_charges
         create_charges_event(self)
-        super(Character, self).__init__(inertia /= 2, restitution=0, *args, **kwargs)
+        super(Character, self).__init__(inertia = inertia * 0.5, restitution=0, *args, **kwargs)
         # on('pre-collision').do(sound_hit)
 
     def move_player(self, dx, dy):
@@ -37,58 +37,58 @@ class Player(AABB):
         self.shield_charges -= 1
 
     def special_move(self, world, special_charges):
-    if special_charges > 0:
-        shot = RegularPoly(10,
-            length=30,
-            pos=(self.pos.x, self.pos.y + 40),
-            vel=(0,550),
-            omega=20,
-            color='blue',
-            mass='inf')
-        world.add(shot)
-        self.special_charges -= 1
-    else:
-        pass
+        if special_charges > 0:
+            shot = RegularPoly(10,
+                length=30,
+                pos=(self.pos.x, self.pos.y + 40),
+                vel=(0,550),
+                omega=20,
+                color='blue',
+                mass='inf')
+            world.add(shot)
+            self.special_charges -= 1
+        else:
+            pass
 
     def shot(self, world, shot_charges):
-    if shot_charges > 0:
-        shot = AABB(
-            shape=(2, 3),
-            pos=(self.pos.x, self.pos.y+20),
-            vel=(0, 1000),
-            mass='inf',
-            color='blue')
-        world.add(shot)
-        self.shot_charges -= 1
-    else:
-        pass
+        if shot_charges > 0:
+            shot = AABB(
+                shape=(2, 3),
+                pos=(self.pos.x, self.pos.y+20),
+                vel=(0, 1000),
+                mass='inf',
+                color='blue')
+            world.add(shot)
+            self.shot_charges -= 1
+        else:
+            pass
 
     def turbo(self, turbo_charges):
-    if turbo_charges > 0:
-        self.vel *= 3
-        self.turbo_charges -= 1
-    else:
-        pass
+        if turbo_charges > 0:
+            self.vel *= 3
+            self.turbo_charges -= 1
+        else:
+            pass
 
     def create_charges_event(self):
         PLAYERCHARGES = USEREVENT + 2
         pygame.time.set_timer(PLAYERCHARGES, 3500)
 
     def charges_listener(self, shot_charges, turbo_charges, shield_charges, special_charges):
-    if pygame.event.get(PLAYERCHARGES): 
-        refill_charges(self, shot_charges, turbo_charges, shield_charges, special_charges)
+        if pygame.event.get(PLAYERCHARGES): 
+            refill_charges(self, shot_charges, turbo_charges, shield_charges, special_charges)
 
     def refill_charges(self, shot_charges, turbo_charges, shield_charges, special_charges):
-    if special_charges == 0 and shot_charges == 0:
-        self.special_charges = 1
-    if shot_charges == 0:
-        self.shot_charges = 10
-    if turbo_charges < 3:
-        self.turbo_charges += 1
-    if shield_charges == 0:
-        self.shield_charges = 1
-    else:
-        pass
+        if special_charges == 0 and shot_charges == 0:
+            self.special_charges = 1
+        if shot_charges == 0:
+            self.shot_charges = 10
+        if turbo_charges < 3:
+            self.turbo_charges += 1
+        if shield_charges == 0:
+            self.shield_charges = 1
+        else:
+            pass
 
     # def sound_hit(self, col, dx):
     #     sound_hit = os.path.join(_ROOT, 'sfx/hit.wav')
@@ -96,10 +96,10 @@ class Player(AABB):
 
     def check_defeat(self):
         if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
-            print("%s foi destruido." % self.name)
+            print("DERROTA. Você foi destruido.")
             exit()
         elif self.health <= 0:
-            print("%s foi destruido." % self.name)
+            print("DERROTA. Você foi destruido.")
             exit()
 
     @listen('post-collision')
@@ -110,34 +110,22 @@ class Player(AABB):
             while(multi_damage < 3):
                 A.deal_damage()
             B.deal_damage()
-        eliif isinstance(A, Enemy) and isinstance(B, Player):
+        elif isinstance(A, Enemy) and isinstance(B, Player):
             multi_damage = 0
             while(multi_damage < 3):
                 B.deal_damage()
             A.deal_damage()
-        eliif isinstance(A, Player) and isinstance(B, Circle):
+        elif isinstance(A, Player) and isinstance(B, Circle):
             multi_damage = 0
             while(multi_damage < 2):
                 A.deal_damage()
-        eliif isinstance(A, Circle) and isinstance(B, Player):
+        elif isinstance(A, Circle) and isinstance(B, Player):
             multi_damage = 0
             while(multi_damage < 2):
                 B.deal_damage()
-        eliif isinstance(A, Enemy) and isinstance(B, AABB):
-            A.deal_damage()
-        eliif isinstance(A, AABB) and isinstance(B, ENEMY):
+        elif isinstance(A, AABB) and isinstance(B, Player):
             B.deal_damage()
-        eliif isinstance(A, Enemy) and isinstance(B, RegularPoly):
-            multi_damage = 0
-            while(multi_damage < 3):
-                A.deal_damage()
-        eliif isinstance(A, RegularPoly) and isinstance(B, Enemy):
-            multi_damage = 0
-            while(multi_damage < 3):
-                B.deal_damage()
-        eliif isinstance(A, AABB) and isinstance(B, Player):
-            B.deal_damage()
-        eliif isinstance(A, Player) and isinstance(B, AABB):
+        elif isinstance(A, Player) and isinstance(B, AABB):
             A.deal_damage()
             
     def deal_damage(self):
