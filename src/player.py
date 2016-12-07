@@ -24,8 +24,8 @@ class Player(AABB):
 
     def shield(self, player_mass, player_color, shield_charges):
         if self.shield_charges > 0:
-            # shield_sfx = os.path.join(_ROOT, 'sfx/shield.wav')
-            # Music.play_sound(shield_sfx)
+            shield_sfx = os.path.join(_ROOT, 'sfx/shield.wav')
+            Music.play_sound(shield_sfx)
             self.vel = vec(0, 0)
             self.mass *= 10
             self.color = 'darkblue'
