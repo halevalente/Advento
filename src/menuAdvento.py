@@ -12,7 +12,7 @@ def mainMenu():
     #inicializa os objetos do menu principal
     pygame.font.init()
     screen = pygame.display.set_mode((1300, 700), 0, 32)
-    pygame.display.set_caption('BEATLE FIELD! > Menu Principal')
+    pygame.display.set_caption('ADVENTO > Menu Principal')
 
     init = pygame.image.load('images/opt_init.png').convert_alpha()
     exit = pygame.image.load('images/opt_exit.png').convert_alpha()
