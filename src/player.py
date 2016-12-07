@@ -17,7 +17,7 @@ class Player(AABB):
         self.shield_charges = shield_charges
         super(Player, self).__init__(*args, **kwargs)
         self.create_charges(self)
-        # on('pre-collision').do(sound_hit)
+        on('pre-collision').do(sound_hit)
 
     def move_player(self, dx, dy):
         self.vel += (dx, dy)
@@ -95,9 +95,9 @@ class Player(AABB):
             pass
 
 
-    # def sound_hit(self, col, dx):
-    #     sound_hit = os.path.join(_ROOT, 'sfx/hit.wav')
-    #     SFX.play_sound(sound_hit)
+    def sound_hit(self, col, dx):
+        sound_hit = os.path.join(_ROOT, 'sfx/hit.wav')
+        SFX.play_sound(sound_hit)
 
     def check_defeat(self):
         if self.x < 0 or self.x > 800 or self.y < 0 or self.y > 600:
