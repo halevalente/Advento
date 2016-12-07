@@ -54,8 +54,8 @@ class Player(AABB):
 
     def shot(self, world, shot_charges):
         if shot_charges > 0:
-            # shot_sound = os.path.join(_ROOT, 'sfx/shot.mp3')
-            # SFX.play_sound(shot_sound)
+            shot_sound = os.path.join(_ROOT, 'sfx/shot.wav')
+            SFX.play_sound(shot_sound)
             shot = AABB(
                 shape=(2, 3),
                 pos=(self.pos.x, self.pos.y+20),
