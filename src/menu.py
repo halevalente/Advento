@@ -1,7 +1,7 @@
 import advento
 import pygame
 import time
-import random
+import random   
 from battlefield import Battlefield
 from text import text_objects
 
@@ -17,8 +17,11 @@ blue = (0, 0, 200)
 bright_red = (255,0,0)
 bright_blue = (0,0,255)
  
-block_color = (53,115,255)
- 
+pygame.init()
+
+screen = pygame.display.set_mode((800, 600), 0, 32) 
+background = pygame.image.load('images/espaco.png').convert()       
+
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Advento')
 clock = pygame.time.Clock()
@@ -32,10 +35,9 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-        gameDisplay.fill(white)
+        
         largeText = pygame.font.SysFont("comicsansms",115)
-        TextSurf, TextRect = text_objects("Advento", largeText, black)
+        TextSurf, TextRect = text_objects("Advento", largeText, white)
         TextRect.center = ((display_width/2),(display_height/4))
         gameDisplay.blit(TextSurf, TextRect)
 
