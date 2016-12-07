@@ -24,8 +24,8 @@ class Player(AABB):
 
     def shield(self, player_mass, player_color, shield_charges):
         if self.shield_charges > 0:
-            shield_sfx = os.path.join(_ROOT, 'sfx/shield.wav')
-            Music.play_sound(shield_sfx)
+            shield_sound = os.path.join(_ROOT, 'sfx/shield.wav')
+            SFX.play_sound(special_sound)
             self.vel = vec(0, 0)
             self.mass *= 10
             self.color = 'darkblue'
@@ -40,6 +40,8 @@ class Player(AABB):
 
     def special_move(self, world, special_charges):
         if special_charges > 0:
+            special_sound = os.path.join(_ROOT, 'sfx/special.wav')
+            SFX.play_sound(special_sound)
             shot = RegularPoly(10,
                 length=15,
                 pos=(self.pos.x, self.pos.y + 40),
