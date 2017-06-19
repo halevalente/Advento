@@ -1,12 +1,11 @@
+import pygame
+import os
 from FGAme import *
 from sfx import SFX
-from enemy import *
-from player import *
-import pygame
 from pygame.locals import *
-import os
+from enemy import Enemy
 _ROOT = os.path.abspath(os.path.dirname(__file__))
-
+        
 PLAYERCHARGES = USEREVENT + 2
 
 

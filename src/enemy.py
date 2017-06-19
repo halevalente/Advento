@@ -1,10 +1,9 @@
+import pygame
+import os
 from FGAme import *
 from sfx import SFX
-from player import *
-from enemy import *
-import pygame
 from pygame.locals import *
-import os
+# from .player import Player
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ENEMYSHOT = USEREVENT + 1   
