@@ -4,11 +4,12 @@ Advento
 ===================
 A spaceship game
 """
+import py2exe
 from setuptools import setup, find_packages
 
 install_requires = [
     'FGAme==0.6.3',
-    'pygame==1.9.3',,
+    'pygame==1.9.3',
 ]
 
 

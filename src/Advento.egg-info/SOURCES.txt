@@ -1,0 +1,7 @@
+src/Advento.egg-info/PKG-INFO
+src/Advento.egg-info/SOURCES.txt
+src/Advento.egg-info/dependency_links.txt
+src/Advento.egg-info/entry_points.txt
+src/Advento.egg-info/requires.txt
+src/Advento.egg-info/top_level.txt
+src/Advento.egg-info/zip-safe

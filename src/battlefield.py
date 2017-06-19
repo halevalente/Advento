@@ -1,6 +1,6 @@
 from FGAme import *
-from player import Player
 from enemy import Enemy
+from player import *
 from sfx import SFX
 import os
 import pygame

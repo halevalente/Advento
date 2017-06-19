@@ -1,16 +1,15 @@
 from FGAme import *
 from sfx import SFX
 from enemy import *
-import os
 import pygame
 from pygame.locals import *
+import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
 PLAYERCHARGES = USEREVENT + 2
 
 
 class Player(AABB):
-
     def __init__(self, armor_health, shot_charges, special_charges, turbo_charges, shield_charges, *args, **kwargs):
         self.armor_health = armor_health
         self.shot_charges = shot_charges
