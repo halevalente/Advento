@@ -2,10 +2,8 @@ import advento
 import pygame
 import time
 import random
-from enemy import *
-from player import *
 from settings import *
-from battlefield import Battlefield
+from battlefield import *
 from text import text_objects
 
 
