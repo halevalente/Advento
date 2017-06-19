@@ -3,7 +3,7 @@ import pygame
 from pygame.locals import *
 from FGAme import *
 from enemy import Enemy
-from player import Player
+from userplayer import Player
 from sfx import SFX
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 

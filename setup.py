@@ -8,6 +8,8 @@ import py2exe
 from setuptools import setup, find_packages
 
 install_requires = [
+    'smallshapes==0.6.2',
+    'smallvectors==0.6.3',
     'FGAme==0.6.3',
     'pygame==1.9.3',
 ]
