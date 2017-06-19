@@ -1,6 +1,7 @@
 from FGAme import *
 from sfx import SFX
 from enemy import *
+from player import *
 import pygame
 from pygame.locals import *
 import os

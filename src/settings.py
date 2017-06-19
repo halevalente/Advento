@@ -1,4 +1,6 @@
 import pygame
+from player import *
+from settings import *
 
 display_width = 800
 display_height = 600

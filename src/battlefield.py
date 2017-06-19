@@ -1,5 +1,5 @@
 from FGAme import *
-from enemy import Enemy
+from enemy import *
 from player import *
 from sfx import SFX
 import os
