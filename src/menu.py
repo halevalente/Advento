@@ -1,14 +1,14 @@
 import advento
 import pygame
 import time
-import random   
+import random
 from battlefield import Battlefield
 from text import text_objects
 
 pygame.init()
 display_width = 800
 display_height = 600
- 
+
 #color
 black = (0,0,0)
 white = (255,255,255)
@@ -16,18 +16,18 @@ red = (200,0,0)
 blue = (0, 0, 200)
 bright_red = (255,0,0)
 bright_blue = (0,0,255)
- 
+
 pygame.init()
 
-screen = pygame.display.set_mode((800, 600), 0, 32) 
-background = pygame.image.load('images/espaco.png').convert()       
+screen = pygame.display.set_mode((800, 600), 0, 32)
+background = pygame.image.load('images/espaco.png').convert()
 
 gameDisplay = pygame.display.set_mode((display_width,display_height))
 pygame.display.set_caption('Advento')
 clock = pygame.time.Clock()
-    
 
-def game_intro():     
+
+def game_intro():
     intro = True
 
     while intro:
@@ -35,7 +35,7 @@ def game_intro():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        
+
         largeText = pygame.font.SysFont("comicsansms",115)
         TextSurf, TextRect = text_objects("Advento", largeText, white)
         TextRect.center = ((display_width/2),(display_height/4))
@@ -43,10 +43,10 @@ def game_intro():
 
         button("Começar",310,300,200,100,bright_blue,blue, game_loop)
         button("Sair",310,450,200,100,bright_red,red,quitgame)
-   
+
         pygame.display.update()
         clock.tick(15)
-		
+
 def button(msg,x,y,w,h,ic,ac, action=None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
@@ -54,7 +54,7 @@ def button(msg,x,y,w,h,ic,ac, action=None):
         pygame.draw.rect(gameDisplay, ac,(x,y,w,h))
 
         if click[0] == 1 and action != None:
-            action()         
+            action()
     else:
         pygame.draw.rect(gameDisplay, ic,(x,y,w,h))
 
@@ -62,7 +62,7 @@ def button(msg,x,y,w,h,ic,ac, action=None):
     textSurf, textRect = text_objects(msg, smallText, black)
     textRect.center = ( (x+(w/2)), (y+(h/2)) )
     gameDisplay.blit(textSurf, textRect)
-	
+
 def game_loop():
     advento.run()
 

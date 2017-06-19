@@ -128,7 +128,7 @@ pygame.time.set_timer(ENEMYSHOT, 500)
 
 @listen('frame-enter')
 def shot_listener():
-    if pygame.event.get(ENEMYSHOT): 
+    if pygame.event.get(ENEMYSHOT):
         enemy_shot()
 
 def enemy_shot():
@@ -146,7 +146,7 @@ pygame.time.set_timer(PLAYERCHARGES, 3500)
 
 @listen('frame-enter')
 def charges_listener():
-    if pygame.event.get(PLAYERCHARGES): 
+    if pygame.event.get(PLAYERCHARGES):
         refill_charges()
 
 def refill_charges():
@@ -164,7 +164,7 @@ def refill_charges():
         shield_charges = 1
     else:
         pass
-        
+
 
 
 # Eliminar tiros fora de cena

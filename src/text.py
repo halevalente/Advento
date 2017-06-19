@@ -6,7 +6,7 @@ white = (255,255,255)
 def text_objects(text, font, color):
     textSurface = font.render(text, True, color)
     return textSurface, textSurface.get_rect()
-	
+
 def message_display(x, y, text):
 	clock = pygame.time.Clock()
 	gameDisplay = pygame.display.set_mode((800,650))

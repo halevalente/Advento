@@ -22,14 +22,14 @@ class Battlefield(World):
         self.enemy = Enemy(shape=(35, 35),
                             pos=(400, 530),
                             color='red',
-                            mass='inf',
-                            vel=(300,0),
+                            mass='500',
+                            vel=(750,0),
                             armor_health=100)
         self.add([self.player, self.enemy])
         self.damping = 2
 
-        main_theme = os.path.join(_ROOT, 'sfx/main_theme.wav')
-        SFX.play_music(main_theme)
+        # main_theme = os.path.join(_ROOT, 'sfx/main_theme.wav')
+        # SFX.play_music(main_theme)
 
         self.draw_platforms()
         self.draw_margin()
@@ -38,10 +38,10 @@ class Battlefield(World):
         on('long-press', 'right').do(self.player.move_player, 25, 0)
         on('long-press', 'up').do(self.player.move_player, 0, 25)
         on('long-press', 'down').do(self.player.move_player, 0, -25)
-        on('key-down', 'q').do(self.player.shot, self, self.player.special_charges)
+        on('key-down', 'q').do(self.player.shot, self)
         on('key-down', 'w').do(self.player.turbo, self.player.turbo_charges)
         on('key-down', 'e').do(self.player.shield, self.player.mass, self.player.color, self.player.shield_charges)
-        on('key-down', 'r').do(self.player.special_move, self, self.player.special_charges)
+        on('key-down', 'r').do(self.player.special_move, self)
         on('frame-enter').do(self.player.charges_listener,
                             self.player.shot_charges,
                             self.player.turbo_charges,

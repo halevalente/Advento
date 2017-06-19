@@ -6,7 +6,7 @@ from pygame.locals import *
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
 
-ENEMYSHOT = USEREVENT + 1   
+ENEMYSHOT = USEREVENT + 1
 
 
 class Enemy(AABB):
@@ -18,9 +18,9 @@ class Enemy(AABB):
 
     def enemy_movement(self, vel):
         if self.x >= 750:
-            self.vel = (self.vel.x*(-1), self.vel.y)
+            self.vel = (-1500, self.vel.y)
         elif self.x <= 50:
-            self.vel = (self.vel.x*(-1), self.vel.y)
+            self.vel = (1500, self.vel.y)
         else:
             pass
 
@@ -31,7 +31,7 @@ class Enemy(AABB):
     def enemy_shot_listener(self, world):
         if pygame.event.get(ENEMYSHOT):
             self.enemy_shot(world)
-            
+
     def enemy_shot(self, world):
         shot = Circle(3,
             pos=(self.pos.x, self.pos.y-40),
@@ -58,16 +58,30 @@ class Enemy(AABB):
         A, B = col
         if isinstance(A, Enemy) and isinstance(B, AABB):
             A.deal_damage()
+            # arena.remove(B)
+            A.pos=(A.pos.x, 530)
+            A.vel=(1500,0)
         elif isinstance(A, AABB) and isinstance(B, Enemy):
             B.deal_damage()
+            # arena.remove(A)
+            B.pos=(B.pos.x, 530)
+            B.vel=(1500,0)
         elif isinstance(A, Enemy) and isinstance(B, RegularPoly):
             multi_damage = 0
             while(multi_damage < 3):
                 A.deal_damage()
+                multi_damage += 1
+            arena.remove(B)
+            A.pos=(A.pos.x, 530)
+            A.vel=(1500,0)
         elif isinstance(A, RegularPoly) and isinstane(B, Enemy):
             multi_damage = 0
             while(multi_damage < 3):
                 B.deal_damage()
+                multi_damage += 1
+            arena.remove(A)
+            B.pos=(B.pos.x, 530)
+            B.vel=(1500,0)
         else:
             pass
 
