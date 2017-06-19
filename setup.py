@@ -4,7 +4,6 @@ Advento
 ===================
 A spaceship game
 """
-import py2exe
 from setuptools import setup, find_packages
 
 install_requires = [
